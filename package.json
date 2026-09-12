@@ -1,0 +1,12 @@
+{
+  "name": "dsh-plugin-anakut",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DSH tools for driving Anakut Worker enrollment and operations",
+  "exports": "./src/index.ts",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "*",
+    "@deepseek-ai/dsh-tools": "*"
+  }
+}
