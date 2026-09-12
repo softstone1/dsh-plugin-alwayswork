@@ -1,20 +1,20 @@
-# dsh-plugin-anakut
+# dsh-plugin-alwayswork
 
-A DSH (Cordis) tool plugin that lets an AI agent drive Anakut Worker
+A DSH (Cordis) tool plugin that lets an AI agent drive AlwaysWork
 enrollment and operations, so a box onboards and maintains itself.
 
 ## Tools
 
 | Tool | What it does |
 |------|--------------|
-| `anakut_enroll` | announce this worker and wait for approval |
-| `anakut_status` | worker status: config, engine, capabilities, control link |
-| `anakut_doctor` | scored security and health audit |
-| `anakut_apply` | reconcile to the assigned desired state |
-| `anakut_install_app` | install tools from the curated catalog |
-| `anakut_report` | heartbeat and reconcile once |
+| `alwayswork_enroll` | announce this worker and wait for approval |
+| `alwayswork_status` | worker status: config, engine, capabilities, control link |
+| `alwayswork_doctor` | scored security and health audit |
+| `alwayswork_apply` | reconcile to the assigned desired state |
+| `alwayswork_install_app` | install tools from the curated catalog |
+| `alwayswork_report` | heartbeat and reconcile once |
 
-Each tool shells out to the `aw` CLI (override with `ANAKUT_AW_BIN`). The
+Each tool shells out to the `aw` CLI (override with `ALWAYSWORK_AW_BIN`). The
 plugin never talks to the control plane directly; it drives the same audited
 path a human would.
 
@@ -33,7 +33,7 @@ this module in the overlay. See the DSH Cordis tutorial, chapter 7.
 
 ## Skill
 
-`skills/anakut-bootstrap/SKILL.md` is the bootstrap objective: enroll,
+`skills/alwayswork-bootstrap/SKILL.md` is the bootstrap objective: enroll,
 verify, stay managed, report.
 
 ## Safety
@@ -45,5 +45,5 @@ fail-closed while pending or revoked.
 
 ## Related
 
-- `softstone1/anakut-worker` - the box-side CLI and capabilities
-- `softstone1/anakut-control` - the control plane
+- `softstone1/alwayswork-agent-worker` - the box-side CLI and capabilities
+- `softstone1/alwayswork-control` - the control plane

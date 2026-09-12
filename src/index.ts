@@ -5,12 +5,12 @@ import { defineTool } from "@deepseek-ai/dsh-tools";
 
 const execFileAsync = promisify(execFile);
 
-export const name = "anakut";
+export const name = "alwayswork";
 export const inject = ["tools"];
 
-const AW = process.env.ANAKUT_AW_BIN ?? "aw";
+const AW = process.env.ALWAYSWORK_AW_BIN ?? "aw";
 
-/** Run the anakut-worker CLI and return combined output (never throws). */
+/** Run the alwayswork-worker CLI and return combined output (never throws). */
 async function aw(args: string[]): Promise<string> {
   try {
     const { stdout, stderr } = await execFileAsync(AW, args, {
@@ -33,8 +33,8 @@ const output = {
 
 export function apply(ctx: Context): void {
   ctx.tools.register(defineTool({
-    name: "anakut_status",
-    description: "Show this Anakut worker's status: config, engine, capabilities and control link.",
+    name: "alwayswork_status",
+    description: "Show this AlwaysWork worker's status: config, engine, capabilities and control link.",
     parameters: {},
     output,
     async execute() {
@@ -43,7 +43,7 @@ export function apply(ctx: Context): void {
   }));
 
   ctx.tools.register(defineTool({
-    name: "anakut_doctor",
+    name: "alwayswork_doctor",
     description: "Run the scored security and health audit on this worker and return its findings.",
     parameters: {},
     output,
@@ -53,7 +53,7 @@ export function apply(ctx: Context): void {
   }));
 
   ctx.tools.register(defineTool({
-    name: "anakut_apply",
+    name: "alwayswork_apply",
     description: "Reconcile this worker to the desired state assigned by the control plane.",
     parameters: {},
     output,
@@ -63,7 +63,7 @@ export function apply(ctx: Context): void {
   }));
 
   ctx.tools.register(defineTool({
-    name: "anakut_install_app",
+    name: "alwayswork_install_app",
     description: "Install one or more tools from the curated catalog (for example ripgrep, lazygit, btop).",
     parameters: {
       ids: { type: "array", items: { type: "string" }, required: true, description: "Catalog app ids" },
@@ -75,8 +75,8 @@ export function apply(ctx: Context): void {
   }));
 
   ctx.tools.register(defineTool({
-    name: "anakut_enroll",
-    description: "Enroll this worker with the Anakut control plane. Omit the token to claim and approve.",
+    name: "alwayswork_enroll",
+    description: "Enroll this worker with the AlwaysWork control plane. Omit the token to claim and approve.",
     parameters: {
       control: { type: "string", required: true, description: "Control-plane base URL" },
       token: { type: "string", required: false, description: "Join token, if the console minted one" },
@@ -90,7 +90,7 @@ export function apply(ctx: Context): void {
   }));
 
   ctx.tools.register(defineTool({
-    name: "anakut_report",
+    name: "alwayswork_report",
     description: "Report this worker's state to the control plane once: heartbeat and reconcile.",
     parameters: {},
     output,

@@ -1,9 +1,9 @@
 {
-  "name": "dsh-plugin-anakut",
+  "name": "dsh-plugin-alwayswork",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "DSH tools for driving Anakut Worker enrollment and operations",
+  "description": "DSH tools for driving AlwaysWork enrollment and operations",
   "exports": "./src/index.ts",
   "peerDependencies": {
     "@deepseek-ai/cordis": "*",
