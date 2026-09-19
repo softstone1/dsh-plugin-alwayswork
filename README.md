@@ -1,22 +1,30 @@
 # dsh-plugin-alwayswork
 
-A DSH (Cordis) tool plugin that lets an AI agent drive AlwaysWork
-enrollment and operations, so a box onboards and maintains itself.
+A DSH (Cordis) tool plugin that lets the node's agent work with AlwaysWork:
+take **objectives** from the control plane and report results, and operate
+the node and its **service workloads** through an allowlisted bridge.
+
+It runs in two places and picks the right channel itself:
+
+| Where | Channel |
+|---|---|
+| Inside the `agents.dsh` workload container (standard) | files under `/workspace/.alwayswork` shared with the node's agent: `objectives/` (from the control plane), `requests/` → `results/` (the host bridge, `alwayswork-bridge.path` on the node) |
+| On a host with `aw` on PATH (legacy `mode: host`) | shells out to `aw` |
 
 ## Tools
 
 | Tool | What it does |
 |------|--------------|
-| `alwayswork_enroll` | announce this worker and wait for approval |
-| `alwayswork_status` | worker status: config, engine, capabilities, control link |
+| `alwayswork_objectives` | list open objectives (pending / running / result written) |
+| `alwayswork_objective_update` | report `running`, `done` (summary) or `failed` (reason); the node forwards it on heartbeat |
+| `alwayswork_status` | node status |
 | `alwayswork_doctor` | scored security and health audit |
-| `alwayswork_apply` | reconcile to the assigned desired state |
-| `alwayswork_install_app` | install tools from the curated catalog |
-| `alwayswork_report` | heartbeat and reconcile once |
+| `alwayswork_services` | service workloads on the node with health |
+| `alwayswork_service` | `status \| logs \| snapshot \| backup <id>` — the same audited operations an operator runs |
+| `alwayswork_apply`, `alwayswork_install_app`, `alwayswork_enroll` | host only |
 
-Each tool shells out to the `aw` CLI (override with `ALWAYSWORK_AW_BIN`). The
-plugin never talks to the control plane directly; it drives the same audited
-path a human would.
+Never a command line: the bridge accepts named operations with validated
+arguments (`lib/objectives.sh` in the agent repo).
 
 ## Install
 
@@ -28,22 +36,11 @@ Add the module to a DSH composition. Minimal `cordis.yml`:
 - name: './src/index.ts'
 ```
 
-For a persistent profile, add the package as a profile dependency and include
-this module in the overlay. See the DSH Cordis tutorial, chapter 7.
+Environment: `ALWAYSWORK_WORKSPACE_ROOT` (default `/workspace/.alwayswork`),
+`ALWAYSWORK_AW_BIN` (host mode), `ALWAYSWORK_FORCE_AW=1` to force host mode.
 
-## Skill
+## Skills
 
-`skills/alwayswork-bootstrap/SKILL.md` is the bootstrap objective: enroll,
-verify, stay managed, report.
-
-## Safety
-
-The plugin exposes no privilege the `aw` CLI does not already have.
-Enrollment is host-initiated and operator-approved; desired state is authored
-by the control plane; every operator action is audited; the worker is
-fail-closed while pending or revoked.
-
-## Related
-
-- `softstone1/alwayswork-agent-worker` - the box-side CLI and capabilities
-- `softstone1/alwayswork-control` - the control plane
+- `skills/alwayswork-operator/SKILL.md` — objectives, node health, services
+  (snapshot before risk, verify before "done").
+- `skills/alwayswork-bootstrap/SKILL.md` — the host-mode bootstrap objective.
