@@ -33,6 +33,7 @@ the control plane gets your **results**, never your commands.
 ## Services (databases and other workloads)
 
 - `alwayswork_services` — what runs here and how it is reached.
+- `alwayswork_packages` — what the control plane delivered here (versions, install errors).
 - `alwayswork_service` with `status | logs | snapshot | backup`.
 - **Before anything risky** (schema migration, major upgrade, bulk delete):
   `snapshot` (instant, read-only btrfs snapshot) and `backup` (logical

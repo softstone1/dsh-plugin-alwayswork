@@ -155,6 +155,14 @@ export function apply(ctx: Context): void {
   }));
 
   ctx.tools.register(defineTool({
+    name: "alwayswork_packages",
+    description: "List the packages the control plane delivered to this node (oci workloads, capabilities, catalog apps) with version, state and any install error.",
+    parameters: {},
+    output,
+    async execute() { return nodeOp("packages", [], ["package", "list"]); },
+  }));
+
+  ctx.tools.register(defineTool({
     name: "alwayswork_service",
     description: "Operate a service workload on this node: status, logs, snapshot (read-only btrfs snapshot of its data), or backup (logical dump). These are the same audited operations an operator runs by hand; use snapshot before anything risky.",
     parameters: {

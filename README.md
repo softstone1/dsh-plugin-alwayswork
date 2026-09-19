@@ -20,6 +20,7 @@ It runs in two places and picks the right channel itself:
 | `alwayswork_status` | node status |
 | `alwayswork_doctor` | scored security and health audit |
 | `alwayswork_services` | service workloads on the node with health |
+| `alwayswork_packages` | packages delivered by the control plane: version, state, errors |
 | `alwayswork_service` | `status \| logs \| snapshot \| backup <id>` — the same audited operations an operator runs |
 | `alwayswork_apply`, `alwayswork_install_app`, `alwayswork_enroll` | host only |
 
